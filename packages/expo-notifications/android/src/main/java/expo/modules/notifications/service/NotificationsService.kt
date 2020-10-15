@@ -305,6 +305,16 @@ open class NotificationsService : BroadcastReceiver() {
     }
 
     /**
+     * Cancel selected scheduled notification and remove it from the storage asynchronously.
+     *
+     * @param context        Context this is being called from
+     * @param identifier     Identifier of the notification to be removed
+     * @param resultReceiver Receiver to be called with the result
+     */
+    fun removeScheduledNotification(context: Context, identifier: String, resultReceiver: ResultReceiver? = null) =
+      removeScheduledNotifications(context, listOf(identifier), resultReceiver)
+
+    /**
      * Cancel selected scheduled notifications and remove them from the storage asynchronously.
      *
      * @param context        Context this is being called from
