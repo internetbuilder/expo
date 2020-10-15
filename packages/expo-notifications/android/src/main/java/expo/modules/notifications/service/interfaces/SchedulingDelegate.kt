@@ -7,7 +7,7 @@ interface SchedulingDelegate {
   fun getAllScheduledNotifications(): Collection<NotificationRequest>
   fun getScheduledNotification(identifier: String): NotificationRequest?
   fun scheduleNotification(request: NotificationRequest)
-  fun triggerNotification(request: NotificationRequest)
+  fun triggerNotification(identifier: String)
   fun removeScheduledNotifications(identifiers: Collection<String>)
   fun removeAllScheduledNotifications()
 }

@@ -549,7 +549,7 @@ open class NotificationsService : BroadcastReceiver() {
 
   open fun onNotificationTriggered(context: Context, intent: Intent) =
     getSchedulingDelegate(context).triggerNotification(
-      intent.extras?.getParcelable(NOTIFICATION_REQUEST_KEY)!!
+      intent.extras?.getString(IDENTIFIER_KEY)!!
     )
 
   open fun onRemoveScheduledNotifications(context: Context, intent: Intent) =
