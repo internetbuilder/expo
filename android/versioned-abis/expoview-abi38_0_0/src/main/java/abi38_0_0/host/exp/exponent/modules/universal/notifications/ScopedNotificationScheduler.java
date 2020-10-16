@@ -19,6 +19,10 @@ import host.exp.exponent.kernel.ExperienceId;
 import host.exp.exponent.notifications.ScopedNotificationsUtils;
 import host.exp.exponent.notifications.model.ScopedNotificationRequest;
 
+import static expo.modules.notifications.service.NotificationsService.EXCEPTION_KEY;
+import static expo.modules.notifications.service.NotificationsService.NOTIFICATION_REQUESTS_KEY;
+import static expo.modules.notifications.service.NotificationsService.SUCCESS_CODE;
+
 public class ScopedNotificationScheduler extends NotificationScheduler {
   private final ExperienceId mExperienceId;
   private final ScopedNotificationsUtils mScopedNotificationsUtils;
@@ -52,15 +56,15 @@ public class ScopedNotificationScheduler extends NotificationScheduler {
       @Override
       protected void onReceiveResult(int resultCode, Bundle resultData) {
         super.onReceiveResult(resultCode, resultData);
-        if (resultCode == NotificationSchedulingHelper.SUCCESS_CODE) {
-          NotificationRequest request = resultData.getParcelable(NotificationSchedulingHelper.NOTIFICATION_REQUESTS_KEY);
+        if (resultCode == SUCCESS_CODE) {
+          NotificationRequest request = resultData.getParcelable(NOTIFICATION_REQUESTS_KEY);
           if (request == null || !mScopedNotificationsUtils.shouldHandleNotification(request, mExperienceId)) {
             promise.resolve(null);
           }
 
           doCancelScheduledNotificationAsync(identifier, promise);
         } else {
-          Exception e = resultData.getParcelable(NotificationSchedulingHelper.EXCEPTION_KEY);
+          Exception e = resultData.getParcelable(EXCEPTION_KEY);
           promise.reject("ERR_NOTIFICATIONS_FAILED_TO_FETCH", "Failed to fetch scheduled notifications.", e);
         }
       }
@@ -73,8 +77,8 @@ public class ScopedNotificationScheduler extends NotificationScheduler {
       @Override
       protected void onReceiveResult(int resultCode, Bundle resultData) {
         super.onReceiveResult(resultCode, resultData);
-        if (resultCode == NotificationSchedulingHelper.SUCCESS_CODE) {
-          Collection<NotificationRequest> requests = resultData.getParcelableArrayList(NotificationSchedulingHelper.NOTIFICATION_REQUESTS_KEY);
+        if (resultCode == SUCCESS_CODE) {
+          Collection<NotificationRequest> requests = resultData.getParcelableArrayList(NOTIFICATION_REQUESTS_KEY);
           if (requests == null) {
             promise.resolve(null);
             return;
@@ -93,7 +97,7 @@ public class ScopedNotificationScheduler extends NotificationScheduler {
 
           cancelSelectedNotificationsAsync(toRemove.toArray(new String[0]), promise);
         } else {
-          Exception e = resultData.getParcelable(NotificationSchedulingHelper.EXCEPTION_KEY);
+          Exception e = resultData.getParcelable(EXCEPTION_KEY);
           promise.reject("ERR_NOTIFICATIONS_FAILED_TO_CANCEL", "Failed to cancel all notifications.", e);
         }
       }
@@ -109,10 +113,10 @@ public class ScopedNotificationScheduler extends NotificationScheduler {
       @Override
       protected void onReceiveResult(int resultCode, Bundle resultData) {
         super.onReceiveResult(resultCode, resultData);
-        if (resultCode == NotificationSchedulingHelper.SUCCESS_CODE) {
+        if (resultCode == SUCCESS_CODE) {
           promise.resolve(null);
         } else {
-          Exception e = resultData.getParcelable(NotificationSchedulingHelper.EXCEPTION_KEY);
+          Exception e = resultData.getParcelable(EXCEPTION_KEY);
           promise.reject("ERR_NOTIFICATIONS_FAILED_TO_CANCEL", "Failed to cancel all notifications.", e);
         }
       }

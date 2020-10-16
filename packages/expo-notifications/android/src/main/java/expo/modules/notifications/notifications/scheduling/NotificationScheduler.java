@@ -30,6 +30,10 @@ import expo.modules.notifications.notifications.triggers.DateTrigger;
 import expo.modules.notifications.notifications.triggers.TimeIntervalTrigger;
 import expo.modules.notifications.notifications.triggers.WeeklyTrigger;
 
+import static expo.modules.notifications.service.NotificationsService.EXCEPTION_KEY;
+import static expo.modules.notifications.service.NotificationsService.NOTIFICATION_REQUESTS_KEY;
+import static expo.modules.notifications.service.NotificationsService.SUCCESS_CODE;
+
 public class NotificationScheduler extends ExportedModule {
   private final static String EXPORTED_NAME = "ExpoNotificationScheduler";
 
@@ -54,15 +58,15 @@ public class NotificationScheduler extends ExportedModule {
       @Override
       protected void onReceiveResult(int resultCode, Bundle resultData) {
         super.onReceiveResult(resultCode, resultData);
-        if (resultCode == NotificationSchedulingHelper.SUCCESS_CODE) {
-          Collection<NotificationRequest> requests = resultData.getParcelableArrayList(NotificationSchedulingHelper.NOTIFICATION_REQUESTS_KEY);
+        if (resultCode == SUCCESS_CODE) {
+          Collection<NotificationRequest> requests = resultData.getParcelableArrayList(NOTIFICATION_REQUESTS_KEY);
           if (requests == null) {
             promise.reject("ERR_NOTIFICATIONS_FAILED_TO_FETCH", "Failed to fetch scheduled notifications.");
           } else {
             promise.resolve(serializeScheduledNotificationRequests(requests));
           }
         } else {
-          Exception e = resultData.getParcelable(NotificationSchedulingHelper.EXCEPTION_KEY);
+          Exception e = resultData.getParcelable(EXCEPTION_KEY);
           promise.reject("ERR_NOTIFICATIONS_FAILED_TO_FETCH", "Failed to fetch scheduled notifications.", e);
         }
       }
@@ -78,10 +82,10 @@ public class NotificationScheduler extends ExportedModule {
         @Override
         protected void onReceiveResult(int resultCode, Bundle resultData) {
           super.onReceiveResult(resultCode, resultData);
-          if (resultCode == NotificationSchedulingHelper.SUCCESS_CODE) {
+          if (resultCode == SUCCESS_CODE) {
             promise.resolve(identifier);
           } else {
-            Exception e = resultData.getParcelable(NotificationSchedulingHelper.EXCEPTION_KEY);
+            Exception e = resultData.getParcelable(EXCEPTION_KEY);
             if (e == null) {
               promise.reject("ERR_NOTIFICATIONS_FAILED_TO_SCHEDULE", "Failed to schedule notification.");
             } else {
@@ -103,10 +107,10 @@ public class NotificationScheduler extends ExportedModule {
       @Override
       protected void onReceiveResult(int resultCode, Bundle resultData) {
         super.onReceiveResult(resultCode, resultData);
-        if (resultCode == NotificationSchedulingHelper.SUCCESS_CODE) {
+        if (resultCode == SUCCESS_CODE) {
           promise.resolve(null);
         } else {
-          Exception e = resultData.getParcelable(NotificationSchedulingHelper.EXCEPTION_KEY);
+          Exception e = resultData.getParcelable(EXCEPTION_KEY);
           promise.reject("ERR_NOTIFICATIONS_FAILED_TO_CANCEL", "Failed to cancel notification.", e);
         }
       }
@@ -119,10 +123,10 @@ public class NotificationScheduler extends ExportedModule {
       @Override
       protected void onReceiveResult(int resultCode, Bundle resultData) {
         super.onReceiveResult(resultCode, resultData);
-        if (resultCode == NotificationSchedulingHelper.SUCCESS_CODE) {
+        if (resultCode == SUCCESS_CODE) {
           promise.resolve(null);
         } else {
-          Exception e = resultData.getParcelable(NotificationSchedulingHelper.EXCEPTION_KEY);
+          Exception e = resultData.getParcelable(EXCEPTION_KEY);
           promise.reject("ERR_NOTIFICATIONS_FAILED_TO_CANCEL", "Failed to cancel all notifications.", e);
         }
       }
