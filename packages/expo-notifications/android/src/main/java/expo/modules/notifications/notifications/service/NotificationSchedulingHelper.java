@@ -14,6 +14,13 @@ import expo.modules.notifications.service.NotificationsService;
  * fetching, adding, removing and triggering. Work should be enqueued with #enqueueVerb static methods.
  */
 public class NotificationSchedulingHelper {
+
+  // Known result codes
+  public static final int SUCCESS_CODE = NotificationsService.SUCCESS_CODE;
+  public static final String EXCEPTION_KEY = NotificationsService.EXCEPTION_KEY;
+  public static final String NOTIFICATION_REQUESTS_KEY = NotificationsService.NOTIFICATION_REQUESTS_KEY;
+
+
   /**
    * Fetches all scheduled notifications asynchronously.
    *
