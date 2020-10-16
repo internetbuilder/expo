@@ -263,7 +263,7 @@ open class NotificationsService : BroadcastReceiver() {
      * @param identifier     Identifier of the notification to be fetched
      * @param resultReceiver Receiver to be called with the results
      */
-    fun getScheduledNotifications(context: Context, identifier: String, resultReceiver: ResultReceiver? = null) {
+    fun getScheduledNotification(context: Context, identifier: String, resultReceiver: ResultReceiver? = null) {
       doWork(
         context,
         Intent(
@@ -343,7 +343,7 @@ open class NotificationsService : BroadcastReceiver() {
      * @param context        Context this is being called from
      * @param resultReceiver Receiver to be called with the result
      */
-    fun removeAllScheduledNotifications(context: Context, resultReceiver: ResultReceiver?) {
+    fun removeAllScheduledNotifications(context: Context, resultReceiver: ResultReceiver? = null) {
       doWork(
         context,
         Intent(NOTIFICATION_EVENT_ACTION).also { intent ->
