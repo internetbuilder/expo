@@ -54,7 +54,7 @@
     "prop-types": "^15.6.2",
     "querystring": "^0.2.0",
     "react": "16.13.1",
-    "react-native": "0.63.2",
+    "react-native": "0.65.0",
     "react-native-appearance": "~0.3.3",
     "react-native-fade-in-image": "^1.5.0",
     "react-native-gesture-handler": "~1.7.0",
@@ -69,7 +69,7 @@
     "reanimated-bottom-sheet": "^1.0.0-alpha.18",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "semver": "^6.1.1",
+    "semver": "^7.5.2",
     "sha1": "^1.1.1",
     "url": "^0.11.0"
   },
