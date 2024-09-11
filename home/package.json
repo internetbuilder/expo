@@ -50,7 +50,7 @@
     "graphql-tag": "^2.10.1",
     "immutable": "^4.0.0-rc.12",
     "lodash": "^4.17.15",
-    "path-to-regexp": "^1.8.0",
+    "path-to-regexp": "^8.0.0",
     "prop-types": "^15.6.2",
     "querystring": "^0.2.0",
     "react": "16.13.1",
